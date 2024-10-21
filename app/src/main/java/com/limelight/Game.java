@@ -2009,7 +2009,7 @@ public class Game extends Activity implements SurfaceHolder.Callback,
 
                 // Special handling for 3 finger gesture
                 if (event.getActionMasked() == MotionEvent.ACTION_POINTER_DOWN &&
-                        event.getPointerCount() == 3) {
+                        event.getPointerCount() == 4) {
                     // Three fingers down
                     threeFingerDownTime = event.getEventTime();
 
