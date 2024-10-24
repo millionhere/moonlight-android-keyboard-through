@@ -8,13 +8,13 @@
         android:id="@+id/backgroundTouchView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center" />
+        android:layout_gravity="top|center_horizontal" />
 
     <com.limelight.ui.StreamView
         android:id="@+id/surfaceView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
+        android:layout_gravity="top|center_horizontal"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:focusedByDefault="true"
@@ -29,7 +29,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:layout_gravity="left"
+        android:layout_gravity="bottom|left"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:gravity="left"
         android:background="#80000000"
