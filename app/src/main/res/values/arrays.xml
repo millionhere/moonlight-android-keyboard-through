@@ -16,7 +16,7 @@
         <item>1280x720</item>
         <item>1920x1080</item>
         <item>2560x1440</item>
-        <item>3840x2160</item>
+        <item>3048x1715</item>
     </string-array>
 
     <string-array name="fps_names">
@@ -27,9 +27,9 @@
     </string-array>
     <string-array name="fps_values" translatable="false">
         <item>30</item>
-        <item>60</item>
-        <item>90</item>
-        <item>120</item>
+        <item>72</item>
+        <item>96</item>
+        <item>144</item>
     </string-array>
 
     <string-array name="audio_config_names">
