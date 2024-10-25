@@ -143,7 +143,7 @@ public class StreamSettings extends Activity {
             pref.setEntryValues(newValues);
         }
 
-        private void addNativeResolutionEntry(int nativeWidth, int nativeHeight, boolean insetsRemoved, boolean portrait) {
+        private void addNativeResolutionEntry(int nativeWidth, int nativeHeight, boolean insetsRemoved, boolean portrait, String aspectRatio) {
             ListPreference pref = (ListPreference) findPreference(PreferenceConfiguration.RESOLUTION_PREF_STRING);
 
             String newName;
@@ -154,6 +154,8 @@ public class StreamSettings extends Activity {
             else {
                 newName = getResources().getString(R.string.resolution_prefix_native);
             }
+
+            newName += aspectRatio;
 
             if (PreferenceConfiguration.isSquarishScreen(nativeWidth, nativeHeight)) {
                 if (portrait) {
@@ -182,11 +184,11 @@ public class StreamSettings extends Activity {
             appendPreferenceEntry(pref, newName, newValue);
         }
 
-        private void addNativeResolutionEntries(int nativeWidth, int nativeHeight, boolean insetsRemoved) {
+        private void addNativeResolutionEntries(int nativeWidth, int nativeHeight, boolean insetsRemoved, String aspectRatio) {
             if (PreferenceConfiguration.isSquarishScreen(nativeWidth, nativeHeight)) {
-                addNativeResolutionEntry(nativeHeight, nativeWidth, insetsRemoved, true);
+                addNativeResolutionEntry(nativeHeight, nativeWidth, insetsRemoved, true, aspectRatio);
             }
-            addNativeResolutionEntry(nativeWidth, nativeHeight, insetsRemoved, false);
+            addNativeResolutionEntry(nativeWidth, nativeHeight, insetsRemoved, false, aspectRatio);
         }
 
         private void addNativeFrameRateEntry(float framerate) {
@@ -384,7 +386,11 @@ public class StreamSettings extends Activity {
                             int width = Math.max(metrics.widthPixels - widthInsets, metrics.heightPixels - heightInsets);
                             int height = Math.min(metrics.widthPixels - widthInsets, metrics.heightPixels - heightInsets);
 
-                            addNativeResolutionEntries(width, height, false);
+                            addNativeResolutionEntries(width, height, false, "");
+                            addNativeResolutionEntries(width, Math.round(width*10/16), false, "16:10");
+                            addNativeResolutionEntries(width, Math.round(width*9/16), false, "16:9");
+                            addNativeResolutionEntries(width, Math.round(width*9/17), false, "17:9");
+                            addNativeResolutionEntries(width, Math.round(width*9/21), false, "21:9");
                             hasInsets = true;
                         }
                     }
@@ -409,7 +415,11 @@ public class StreamSettings extends Activity {
                     // unless they report greater than 4K resolutions.
                     if (!getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEVISION) ||
                             (width > 3840 || height > 2160)) {
-                        addNativeResolutionEntries(width, height, hasInsets);
+                        addNativeResolutionEntries(width, height, hasInsets, "");
+                        addNativeResolutionEntries(width, Math.round(width*10/16), hasInsets, "16:10");
+                        addNativeResolutionEntries(width, Math.round(width*9/16), hasInsets, "16:9");
+                        addNativeResolutionEntries(width, Math.round(width*9/17), hasInsets, "17:9");
+                        addNativeResolutionEntries(width, Math.round(width*9/21), hasInsets, "21:9");
                     }
 
                     if ((width >= 3840 || height >= 2160) && maxSupportedResW < 3840) {
@@ -518,7 +528,7 @@ public class StreamSettings extends Activity {
                 display.getRealMetrics(metrics);
                 int width = Math.max(metrics.widthPixels, metrics.heightPixels);
                 int height = Math.min(metrics.widthPixels, metrics.heightPixels);
-                addNativeResolutionEntries(width, height, false);
+                addNativeResolutionEntries(width, height, false, "");
             }
 
             if (!PreferenceConfiguration.readPreferences(this.getActivity()).unlockFps) {
