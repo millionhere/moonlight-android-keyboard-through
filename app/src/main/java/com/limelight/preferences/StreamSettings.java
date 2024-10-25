@@ -387,10 +387,10 @@ public class StreamSettings extends Activity {
                             int height = Math.min(metrics.widthPixels - widthInsets, metrics.heightPixels - heightInsets);
 
                             addNativeResolutionEntries(width, height, false, "");
-                            if (width*10/16 < height-1) addNativeResolutionEntries(width, Math.floor(width*10/16), false, "16:10");
-                            if (width*9/16 < height-1) addNativeResolutionEntries(width, Math.floor(width*9/16), false, "16:9");
-                            if (width*9/17 < height-1) addNativeResolutionEntries(width, Math.floor(width*9/17), false, "17:9");
-                            if (width*9/21 < height-1) addNativeResolutionEntries(width, Math.floor(width*9/21), false, "21:9");
+                            if (width*10/16 < height-1) addNativeResolutionEntries(width, (int)Math.floor(width*10/16), false, "16:10");
+                            if (width*9/16 < height-1) addNativeResolutionEntries(width, (int)Math.floor(width*9/16), false, "16:9");
+                            if (width*9/17 < height-1) addNativeResolutionEntries(width, (int)Math.floor(width*9/17), false, "17:9");
+                            if (width*9/21 < height-1) addNativeResolutionEntries(width, (int)Math.floor(width*9/21), false, "21:9");
                             hasInsets = true;
                         }
                     }
@@ -416,10 +416,10 @@ public class StreamSettings extends Activity {
                     if (!getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEVISION) ||
                             (width > 3840 || height > 2160)) {
                         addNativeResolutionEntries(width, height, hasInsets, "");
-                        if (width*10/16 < height-1) addNativeResolutionEntries(width, Math.floor(width*10/16), hasInsets, "16:10");
-                        if (width*9/16 < height-1) addNativeResolutionEntries(width, Math.floor(width*9/16), hasInsets, "16:9");
-                        if (width*9/17 < height-1) addNativeResolutionEntries(width, Math.floor(width*9/17), hasInsets, "17:9");
-                        if (width*9/21 < height-1) addNativeResolutionEntries(width, Math.floor(width*9/21), hasInsets, "21:9");
+                        if (width*10/16 < height-1) addNativeResolutionEntries(width, (int)Math.floor(width*10/16), hasInsets, "16:10");
+                        if (width*9/16 < height-1) addNativeResolutionEntries(width, (int)Math.floor(width*9/16), hasInsets, "16:9");
+                        if (width*9/17 < height-1) addNativeResolutionEntries(width, (int)Math.floor(width*9/17), hasInsets, "17:9");
+                        if (width*9/21 < height-1) addNativeResolutionEntries(width, (int)Math.floor(width*9/21), hasInsets, "21:9");
                     }
 
                     if ((width >= 3840 || height >= 2160) && maxSupportedResW < 3840) {
