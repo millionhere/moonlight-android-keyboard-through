@@ -316,7 +316,7 @@ public class PreferenceConfiguration {
             }
         }
 
-        return (int)Math.round(resolutionFactor * frameRateFactor * 1.1) * 1000;
+        return (int)Math.round(resolutionFactor * frameRateFactor) * 1000;
     }
 
     public static boolean getDefaultSmallMode(Context context) {
