@@ -649,7 +649,7 @@ public class StreamSettings extends Activity {
                     }
 
                     // Write the new bitrate value
-                    resetBitrateToDefault(prefs, valueStr, null);
+                    //resetBitrateToDefault(prefs, valueStr, null);
 
                     // Allow the original preference change to take place
                     return true;
@@ -671,7 +671,7 @@ public class StreamSettings extends Activity {
                     }
 
                     // Write the new bitrate value
-                    resetBitrateToDefault(prefs, null, valueStr);
+                    //resetBitrateToDefault(prefs, null, valueStr);
 
                     // Allow the original preference change to take place
                     return true;
