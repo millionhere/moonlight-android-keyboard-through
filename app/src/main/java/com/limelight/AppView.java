@@ -35,11 +35,14 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.view.ContextMenu;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -321,13 +324,42 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
         bindService(new Intent(this, ComputerManagerService.class), serviceConnection,
                 Service.BIND_AUTO_CREATE);
 
-        // Setup the list view
+        // Setup the resolution setting list view
         ImageButton resSettingButton = findViewById(R.id.resSettingButton);
-
         resSettingButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AppView.this, StreamSettings.class));
+                final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                final int nativeWidth = getWindowManager().getDefaultDisplay().getMode().getPhysicalWidth();
+                final int nativeHeight = getWindowManager().getDefaultDisplay().getMode().getPhysicalHeight();
+
+                String[] entries = {"Native"};
+                String[] entryValues = {nativeWidth+"x"+nativeHeight};
+                if (nativeWidth*10/16 < nativeHeight-1) {entries.add("Native 16:10"); entryValues.add(nativeWidth+"x"+(int)Math.floor(nativeWidth*10/16));}
+                if (nativeWidth*9/16 < nativeHeight-1) {entries.add("Native 16:9"); entryValues.add(nativeWidth+"x"+(int)Math.floor(nativeWidth*9/16));}
+                if (nativeWidth*9/17 < nativeHeight-1) {entries.add("Native 17:9"); entryValues.add(nativeWidth+"x"+(int)Math.floor(nativeWidth*9/17));}
+                if (nativeWidth*9/21 < nativeHeight-1) {entries.add("Native 21:9"); entryValues.add(nativeWidth+"x"+(int)Math.floor(nativeWidth*9/21));}
+
+                final String selectedResolutionString = prefs.getString(PreferenceConfiguration.RESOLUTION_PREF_STRING, PreferenceConfiguration.DEFAULT_RESOLUTION);
+                int checkedItem = -1;
+                for (int i = 0; i < entryValues.length; i++) {
+                    if (entryValues[i].equals(selectedResolutionString)) {
+                        checkedItem = i;
+                        break;
+                    }
+                }
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Setting Resolution")
+                    .setSingleChoiceItems(entries, checkedItem, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            prefs.edit().putString(PreferenceConfiguration.RESOLUTION_PREF_STRING, entryValues[which]).apply();
+                            dialog.dismiss();
+                        }
+                    })
+                    .setNegativeButton("Cancel", null)
+                    .show();
             }
         });
     }
