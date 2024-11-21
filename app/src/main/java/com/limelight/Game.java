@@ -472,10 +472,10 @@ public class Game extends Activity implements SurfaceHolder.Callback,
             
         int topMargin = Math.min(66, getWindowManager().getDefaultDisplay().getMode().getPhysicalHeight() - prefConfig.height);
         topMargin = (topMargin <= 2) ? 0:topMargin;
-        ViewGroup.MarginLayoutParams streamViewLP = streamView.getLayoutParams();
+        ViewGroup.MarginLayoutParams streamViewLP = (ViewGroup.MarginLayoutParams)streamView.getLayoutParams();
         streamViewLP.topMargin = topMargin;
         streamView.setLayoutParams(streamViewLP);
-        ViewGroup.MarginLayoutParams backgroundTouchViewLP = backgroundTouchView.getLayoutParams();
+        ViewGroup.MarginLayoutParams backgroundTouchViewLP = (ViewGroup.MarginLayoutParams)backgroundTouchView.getLayoutParams();
         backgroundTouchViewLP.topMargin = topMargin;
         backgroundTouchView.setLayoutParams(backgroundTouchViewLP);
             
