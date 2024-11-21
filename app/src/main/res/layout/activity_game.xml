@@ -34,7 +34,7 @@
         android:gravity="left"
         android:background="#80000000"
         android:textColor="#EE88BB"
-		android:fontFamily="@font/players"
+        android:fontFamily="@font/players"
         android:preferKeepClear="true"
         android:visibility="gone" />
 
