@@ -468,7 +468,16 @@ public class Game extends Activity implements SurfaceHolder.Callback,
                 }
             }
         }
-
+            
+        int topMargin = Math.min(66, getWindowManager().getDefaultDisplay().getMode().getPhysicalHeight() - prefConfig.height);
+        topMargin = (topMargin <= 2) ? 0:topMargin;
+        ViewGroup.MarginLayoutParams streamViewLP = streamView.getLayoutParams();
+        streamViewLP.topMargin = topMargin;
+        streamView.setLayoutParams(streamViewLP);
+        ViewGroup.MarginLayoutParams backgroundTouchViewLP = backgroundTouchView.getLayoutParams();
+        backgroundTouchViewLP.topMargin = topMargin;
+        backgroundTouchView.setLayoutParams(backgroundTouchViewLP);
+            
         StreamConfiguration config = new StreamConfiguration.Builder()
                 .setResolution(prefConfig.width, prefConfig.height)
                 .setLaunchRefreshRate(prefConfig.fps)
