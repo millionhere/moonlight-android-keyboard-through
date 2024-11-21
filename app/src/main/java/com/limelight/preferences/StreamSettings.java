@@ -623,7 +623,7 @@ public class StreamSettings extends Activity {
 
             // Add a listener to the FPS and resolution preference
             // so the bitrate can be auto-adjusted
-            findPreference(PreferenceConfiguration.RESOLUTION_PREF_STRING).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            /*findPreference(PreferenceConfiguration.RESOLUTION_PREF_STRING).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SettingsFragment.this.getActivity());
@@ -649,7 +649,7 @@ public class StreamSettings extends Activity {
                     }
 
                     // Write the new bitrate value
-                    //resetBitrateToDefault(prefs, valueStr, null);
+                    resetBitrateToDefault(prefs, valueStr, null);
 
                     // Allow the original preference change to take place
                     return true;
@@ -671,12 +671,12 @@ public class StreamSettings extends Activity {
                     }
 
                     // Write the new bitrate value
-                    //resetBitrateToDefault(prefs, null, valueStr);
+                    resetBitrateToDefault(prefs, null, valueStr);
 
                     // Allow the original preference change to take place
                     return true;
                 }
-            });
+            });*/
         }
     }
 }

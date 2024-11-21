@@ -14,10 +14,10 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/settingsButton"/>
+        android:layout_below="@+id/resSettingButton"/>
     
     <ImageButton
-        android:id="@id/settingsButton"
+        android:id="@id/resSettingButton"
         android:layout_width="70dp"
         android:layout_height="65dp"
         android:cropToPadding="false"
@@ -35,7 +35,7 @@
         android:layout_height="65dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@id/settingsButton"
+        android:layout_toRightOf="@id/resSettingButton"
         android:gravity="center"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
