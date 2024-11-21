@@ -322,9 +322,9 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
                 Service.BIND_AUTO_CREATE);
 
         // Setup the list view
-        ImageButton settingsButton = findViewById(R.id.settingsButton);
+        ImageButton resSettingButton = findViewById(R.id.resSettingButton);
 
-        settingsButton.setOnClickListener(new OnClickListener() {
+        resSettingButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(AppView.this, StreamSettings.class));
