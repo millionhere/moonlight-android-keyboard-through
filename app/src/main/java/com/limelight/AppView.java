@@ -355,7 +355,7 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
                     }
                 }
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AppView.this);
                 builder.setTitle("Setting Resolution")
                     .setSingleChoiceItems(entryStrings, checkedItem, new DialogInterface.OnClickListener() {
                         @Override
