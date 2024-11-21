@@ -317,6 +317,16 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
         // Bind to the computer manager service
         bindService(new Intent(this, ComputerManagerService.class), serviceConnection,
                 Service.BIND_AUTO_CREATE);
+
+        // Setup the list view
+        ImageButton settingsButton = findViewById(R.id.settingsButton);
+
+        settingsButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AppView.this, StreamSettings.class));
+            }
+        });
     }
 
     private void updateHiddenApps(boolean hideImmediately) {

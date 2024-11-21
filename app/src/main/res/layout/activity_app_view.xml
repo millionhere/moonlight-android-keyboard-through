@@ -27,5 +27,19 @@
         android:paddingBottom="5dp"
         android:preferKeepClear="true"
         android:textSize="28sp"/>
-
+    
+    <ImageButton
+        android:id="@+id/settingsButton"
+        android:layout_width="70dp"
+        android:layout_height="65dp"
+        android:cropToPadding="false"
+        android:scaleType="fitXY"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/appListText"
+        android:layout_toEndOf="@id/appListText"
+        android:src="@drawable/ic_settings"
+        android:preferKeepClear="true"
+        style="?android:attr/borderlessButtonStyle"/>
 </RelativeLayout>
