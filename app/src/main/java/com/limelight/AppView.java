@@ -336,13 +336,16 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
                 final int nativeWidth = getWindowManager().getDefaultDisplay().getMode().getPhysicalWidth();
                 final int nativeHeight = getWindowManager().getDefaultDisplay().getMode().getPhysicalHeight();
 
+                int width = Math.max(nativeWidth, nativeHeight);
+                int height = Math.min(nativeWidth, nativeHeight);
+
                 List<String> entries = new ArrayList<>();
                 List<String> entryValues = new ArrayList<>();
-                {entries.add("Native"); entryValues.add(nativeWidth+"x"+nativeHeight);}
-                if (nativeWidth*10/16 < nativeHeight-1) {entries.add("Native 16:10"); entryValues.add(nativeWidth+"x"+(int)Math.floor(nativeWidth*10/16));}
-                if (nativeWidth*9/16 < nativeHeight-1) {entries.add("Native 16:9"); entryValues.add(nativeWidth+"x"+(int)Math.floor(nativeWidth*9/16));}
-                if (nativeWidth*9/17 < nativeHeight-1) {entries.add("Native 17:9"); entryValues.add(nativeWidth+"x"+(int)Math.floor(nativeWidth*9/17));}
-                if (nativeWidth*9/21 < nativeHeight-1) {entries.add("Native 21:9"); entryValues.add(nativeWidth+"x"+(int)Math.floor(nativeWidth*9/21));}
+                {entryValues.add(width+"x"+height); entries.add("Native "+entryValues[entryValues.size()-1]);}
+                if (width*10/16 < height-1) {entryValues.add(width+"x"+(int)Math.floor(width*10/16)); entries.add("Native 16:10 "+entryValues[entryValues.size()-1]);}
+                if (width*9/16 < height-1) {entryValues.add(width+"x"+(int)Math.floor(width*9/16)); entries.add("Native 16:9 "+entryValues[entryValues.size()-1]);}
+                if (width*9/17 < height-1) {entryValues.add(width+"x"+(int)Math.floor(width*9/17)); entries.add("Native 17:9 "+entryValues[entryValues.size()-1]);}
+                if (width*9/21 < height-1) {entryValues.add(width+"x"+(int)Math.floor(width*9/21)); entries.add("Native 21:9 "+entryValues[entryValues.size()-1]);}
 
                 final String[] entryStrings = entries.toArray(new String[0]);
                 final String[] entryValueStrings = entryValues.toArray(new String[0]);

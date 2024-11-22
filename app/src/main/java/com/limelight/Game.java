@@ -2660,7 +2660,7 @@ public class Game extends Activity implements SurfaceHolder.Callback,
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                performanceOverlayView.setText(String.format("Display： %1$.2f FPS", desiredRefreshRate) + '\n' + text);
+                performanceOverlayView.setText(String.format("DPL: %.0f FPS", desiredRefreshRate) + '\n' + text);
             }
         });
     }
