@@ -339,8 +339,8 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
                 int width = Math.max(nativeWidth, nativeHeight);
                 int height = Math.min(nativeWidth, nativeHeight);
 
-                List<String> entries = new ArrayList<>();
-                List<String> entryValues = new ArrayList<>();
+                ArrayList<String> entries = new ArrayList<>();
+                ArrayList<String> entryValues = new ArrayList<>();
                 {entryValues.add(width+"x"+height); entries.add("Native "+entryValues[entryValues.size()-1]);}
                 if (width*10/16 < height-1) {entryValues.add(width+"x"+(int)Math.floor(width*10/16)); entries.add("Native 16:10 "+entryValues[entryValues.size()-1]);}
                 if (width*9/16 < height-1) {entryValues.add(width+"x"+(int)Math.floor(width*9/16)); entries.add("Native 16:9 "+entryValues[entryValues.size()-1]);}
