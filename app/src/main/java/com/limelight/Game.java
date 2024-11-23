@@ -469,16 +469,19 @@ public class Game extends Activity implements SurfaceHolder.Callback,
                 }
             }
         }
-            
-        int topMargin = Math.min(66, getWindowManager().getDefaultDisplay().getMode().getPhysicalHeight() - prefConfig.height);
-        topMargin = (topMargin <= 2) ? 0:topMargin;
-        ViewGroup.MarginLayoutParams streamViewLP = (ViewGroup.MarginLayoutParams)streamView.getLayoutParams();
-        streamViewLP.topMargin = topMargin;
-        streamView.setLayoutParams(streamViewLP);
-        ViewGroup.MarginLayoutParams backgroundTouchViewLP = (ViewGroup.MarginLayoutParams)backgroundTouchView.getLayoutParams();
-        backgroundTouchViewLP.topMargin = topMargin;
-        backgroundTouchView.setLayoutParams(backgroundTouchViewLP);
-            
+
+        int nativeHeight = Math.min(getWindowManager().getDefaultDisplay().getMode().getPhysicalWidth(),
+                                    getWindowManager().getDefaultDisplay().getMode().getPhysicalHeight());
+        int topMargin = Math.min(66, nativeHeight - prefConfig.height);
+        if (topMargin > 2) {
+            ViewGroup.MarginLayoutParams streamViewLP = (ViewGroup.MarginLayoutParams)streamView.getLayoutParams();
+            streamViewLP.topMargin = topMargin;
+            streamView.setLayoutParams(streamViewLP);
+            ViewGroup.MarginLayoutParams backgroundTouchViewLP = (ViewGroup.MarginLayoutParams)backgroundTouchView.getLayoutParams();
+            backgroundTouchViewLP.topMargin = topMargin;
+            backgroundTouchView.setLayoutParams(backgroundTouchViewLP);
+        }
+        
         StreamConfiguration config = new StreamConfiguration.Builder()
                 .setResolution(prefConfig.width, prefConfig.height)
                 .setLaunchRefreshRate(prefConfig.fps)
@@ -2660,7 +2663,7 @@ public class Game extends Activity implements SurfaceHolder.Callback,
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                performanceOverlayView.setText(String.format("DPL: %.0f FPS", desiredRefreshRate) + '\n' + text);
+                performanceOverlayView.setText(String.format("DPL : %.0f FPS", desiredRefreshRate) + '\n' + text);
             }
         });
     }
