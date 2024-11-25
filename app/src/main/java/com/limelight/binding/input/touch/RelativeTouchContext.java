@@ -85,7 +85,7 @@ public class RelativeTouchContext implements TouchContext {
     };
 
     private static final int TAP_MOVEMENT_THRESHOLD = 20;
-    private static final int TAP_DISTANCE_THRESHOLD = 25;
+    private static final int TAP_DISTANCE_THRESHOLD = 50;
     private static final int TAP_TIME_THRESHOLD = 250;
     private static final int DRAG_TIME_THRESHOLD = 650;
 

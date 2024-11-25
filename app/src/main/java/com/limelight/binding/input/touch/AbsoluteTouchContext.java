@@ -57,8 +57,8 @@ public class AbsoluteTouchContext implements TouchContext {
 
     private static final int SCROLL_SPEED_FACTOR = 3;
 
-    private static final int LONG_PRESS_TIME_THRESHOLD = 650;
-    private static final int LONG_PRESS_DISTANCE_THRESHOLD = 30;
+    private static final int LONG_PRESS_TIME_THRESHOLD = 500;
+    private static final int LONG_PRESS_DISTANCE_THRESHOLD = 60;
 
     private static final int DOUBLE_TAP_TIME_THRESHOLD = 250;
     private static final int DOUBLE_TAP_DISTANCE_THRESHOLD = 60;
