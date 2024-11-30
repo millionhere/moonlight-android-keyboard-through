@@ -364,8 +364,8 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             prefs.edit().putString(PreferenceConfiguration.RESOLUTION_PREF_STRING, entryValueStrings[which]).apply();
-                            if (which == 0){prefs.edit().putString(PreferenceConfiguration.ENABLE_PERF_OVERLAY_STRING, "false").apply();}
-                            else {prefs.edit().putString(PreferenceConfiguration.ENABLE_PERF_OVERLAY_STRING, "true").apply();}
+                            if (which == 0){prefs.edit().putString(PreferenceConfiguration.ENABLE_PERF_OVERLAY_STRING, false).apply();}
+                            else {prefs.edit().putString(PreferenceConfiguration.ENABLE_PERF_OVERLAY_STRING, true).apply();}
                             dialog.dismiss();
                         }
                     })
