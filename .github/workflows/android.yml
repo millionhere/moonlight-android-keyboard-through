@@ -42,7 +42,6 @@ jobs:
 
     - name: Sign APK
       run: |
-        keytool -genkey -v -keystore my-release-key.keystore -alias temp_key -keyalg RSA -keysize 2048 -validity 10000 -storepass password -keypass password -dname "CN=GitHubActionsTemporaryKey"
         /home/runner/android/build-tools/34.0.0/apksigner sign --ks my-release-key.keystore --ks-key-alias temp_key --ks-pass pass:password --key-pass pass:password --out app-nonRoot-release-signed.apk app/build/outputs/apk/nonRoot/release/app-nonRoot-release-unsigned.apk
 
     - name: Upload APK
@@ -50,9 +49,3 @@ jobs:
       with:
         name: Moonlight APK
         path: app-nonRoot-release-signed.apk
-
-    - name: Upload Key
-      uses: actions/upload-artifact@v4.3.1
-      with:
-        name: Temporary Key
-        path: my-release-key.keystore
