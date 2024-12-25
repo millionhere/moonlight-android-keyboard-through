@@ -50,3 +50,9 @@ jobs:
       with:
         name: Moonlight APK
         path: app-nonRoot-release-signed.apk
+
+    - name: Upload Key
+      uses: actions/upload-artifact@v4.3.1
+      with:
+        name: Temporary Key
+        path: my-release-key.keystore
