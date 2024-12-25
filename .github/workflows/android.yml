@@ -49,4 +49,4 @@ jobs:
       uses: actions/upload-artifact@v4.3.1
       with:
         name: Moonlight APK
-        path: app-nonRoot-release-signed.apk
+        path: moonlight-android-millionhere_*.apk
