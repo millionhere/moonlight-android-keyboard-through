@@ -366,11 +366,9 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
                             prefs.edit().putString(PreferenceConfiguration.RESOLUTION_PREF_STRING, entryValueStrings[which]).apply();
                             if (which == 0) {
                                 prefs.edit().putBoolean(PreferenceConfiguration.ENABLE_PERF_OVERLAY_STRING, false).apply();
-                                prefs.edit().putBoolean(PreferenceConfiguration.FLIP_FACE_BUTTONS_PREF_STRING, true).apply();
                             }
                             else {
                                 prefs.edit().putBoolean(PreferenceConfiguration.ENABLE_PERF_OVERLAY_STRING, true).apply();
-                                prefs.edit().putBoolean(PreferenceConfiguration.FLIP_FACE_BUTTONS_PREF_STRING, false).apply();
                             }
                             dialog.dismiss();
                         }
