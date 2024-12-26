@@ -1548,22 +1548,14 @@ public class ControllerHandler implements InputManager.InputDeviceListener, UsbD
 
     private int handleFlipFaceButtons(int keyCode) {
         switch (keyCode) {
-            case KeyEvent.KEYCODE_DPAD_UP:
-                return KeyEvent.KEYCODE_1;  // Skill No.1
-            case KeyEvent.KEYCODE_DPAD_RIGHT:
-                return KeyEvent.KEYCODE_2;  // Skill No.2
-            case KeyEvent.KEYCODE_DPAD_LEFT:
-                return KeyEvent.KEYCODE_3;  // Skill No.3
-            case KeyEvent.KEYCODE_DPAD_DOWN:
-                return KeyEvent.KEYCODE_S;  // Down Select
-            case KeyEvent.KEYCODE_BUTTON_L1:
-                return KeyEvent.KEYCODE_V;  // Search Star
-            case KeyEvent.KEYCODE_BUTTON_L2:
-                return KeyEvent.KEYCODE_U;  // Task
-            case KeyEvent.KEYCODE_BUTTON_THUMBL:
-                return KeyEvent.KEYCODE_K;  // Events
-            case KeyEvent.KEYCODE_BUTTON_THUMBR:
-                return KeyEvent.KEYCODE_P;  // Camera
+            case KeyEvent.KEYCODE_BUTTON_A:
+                return KeyEvent.KEYCODE_BUTTON_B;
+            case KeyEvent.KEYCODE_BUTTON_B:
+                return KeyEvent.KEYCODE_BUTTON_A;
+            case KeyEvent.KEYCODE_BUTTON_X:
+                return KeyEvent.KEYCODE_BUTTON_Y;
+            case KeyEvent.KEYCODE_BUTTON_Y:
+                return KeyEvent.KEYCODE_BUTTON_X;
             default:
                 return keyCode;
         }
