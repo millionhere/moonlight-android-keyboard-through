@@ -359,21 +359,19 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
                 }
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(AppView.this);
-                builder.setTitle("Setting Resolution")
-                    .setSingleChoiceItems(entryStrings, checkedItem, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            prefs.edit().putString(PreferenceConfiguration.RESOLUTION_PREF_STRING, entryValueStrings[which]).apply();
-                            if (which == 0) {
-                                prefs.edit().putBoolean(PreferenceConfiguration.ENABLE_PERF_OVERLAY_STRING, false).apply();
-                            }
-                            else {
-                                prefs.edit().putBoolean(PreferenceConfiguration.ENABLE_PERF_OVERLAY_STRING, true).apply();
-                            }
-                            dialog.dismiss();
-                        }
+                View customView = getLayoutInflater().inflate(R.layout.activity_resolution_dialog, null);
+                CheckBox perfOverlayCheckBox = customView.findViewById(R.id.perfOverlayCheckBox);
+                perfOverlayCheckBox.setChecked(prefs.getBoolean(PreferenceConfiguration.ENABLE_PERF_OVERLAY_STRING, false));
+                builder.setTitle(R.string.title_resolution_list)
+                    .setSingleChoiceItems(entryStrings, checkedItem, (dialog, which) -> {
+                        prefs.edit()
+                            .putString(PreferenceConfiguration.RESOLUTION_PREF_STRING, entryValueStrings[which])
+                            .putBoolean(PreferenceConfiguration.ENABLE_PERF_OVERLAY_STRING, perfOverlayCheckBox.isChecked())
+                            .apply();
+                        dialog.dismiss();
                     })
-                    .setNegativeButton("Cancel", null)
+                    .setView(customView)
+                    .setNegativeButton(android.R.string.cancel, null)
                     .show();
             }
         });
