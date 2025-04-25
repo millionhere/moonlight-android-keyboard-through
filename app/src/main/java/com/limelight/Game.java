@@ -279,6 +279,11 @@ public class Game extends Activity implements SurfaceHolder.Callback,
         notificationOverlayView = findViewById(R.id.notificationOverlay);
 
         performanceOverlayView = findViewById(R.id.performanceOverlay);
+        performanceOverlayView.setFocusable(false);
+        performanceOverlayView.setClickable(false);
+        performanceOverlayView.setEnabled(false);
+        performanceOverlayView.setKeyListener(null);
+        performanceOverlayView.setOnGenericMotionListener(null);
 
         inputCaptureProvider = InputCaptureManager.getInputCaptureProvider(this, this);
 
