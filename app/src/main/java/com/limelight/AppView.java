@@ -55,6 +55,7 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -388,10 +389,33 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
                 resolutionList.setItemChecked(resCheckedItem, true);
                 fpsList.setItemChecked(fpsCheckedItem, true);
 
+                SeekBar bitrateSeekBar = customView.findViewById(R.id.bitrateSeekBar);
+                TextView bitrateValue = customView.findViewById(R.id.bitrateValue);
+                final int minBitrate = 500;
+                final int maxBitrate = 150000;
+                final int stepSize = 500;
+                int currentBitrate = prefs.getInt(PreferenceConfiguration.BITRATE_PREF_STRING, PreferenceConfiguration.getDefaultBitrate(AppView.this));
+                bitrateSeekBar.setMax((maxBitrate - minBitrate) / stepSize);
+                bitrateSeekBar.setProgress((currentBitrate - minBitrate) / stepSize);
+                bitrateValue.setText(String.format("%.1f", currentBitrate / 1000.0f));
+                bitrateSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        int bitrate = minBitrate + (progress * stepSize);
+                        bitrateValue.setText(String.format("%.1f", bitrate / 1000.0f));
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {}
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {}
+                });
+                
                 CheckBox perfOverlayCheckBox = customView.findViewById(R.id.perfOverlayCheckBox);
                 perfOverlayCheckBox.setChecked(prefs.getBoolean(PreferenceConfiguration.ENABLE_PERF_OVERLAY_STRING, false));
                 
-                builder.setTitle(R.string.title_resolution_list)
+                builder.setTitle(getString(R.string.title_resolution_list) + " & " + getString(R.string.title_seekbar_bitrate))
                     .setView(customView)
                     .setPositiveButton(android.R.string.ok, (dialog, which) -> {
                         prefs.edit()
@@ -399,6 +423,8 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
                                     resValueStrings[resolutionList.getCheckedItemPosition()])
                             .putString(PreferenceConfiguration.FPS_PREF_STRING, 
                                     fpsValueStrings[fpsList.getCheckedItemPosition()])
+                            .putInt(PreferenceConfiguration.BITRATE_PREF_STRING,
+                                    minBitrate + (bitrateSeekBar.getProgress() * stepSize))
                             .putBoolean(PreferenceConfiguration.ENABLE_PERF_OVERLAY_STRING, 
                                     perfOverlayCheckBox.isChecked())
                             .apply();
