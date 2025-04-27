@@ -42,6 +42,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.view.ContextMenu;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -197,9 +198,9 @@ public class PcView extends Activity implements AdapterFragmentCallbacks {
                 }
             }
 
-            final float maxSupportedFps = getWindowManager().getDefaultDisplay().getRefreshRate();
+            float maxSupportedFps = getWindowManager().getDefaultDisplay().getRefreshRate();
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                Display.Mode[] modes = display.getSupportedModes();
+                Display.Mode[] modes = getWindowManager().getDefaultDisplay().getSupportedModes();
                 for (Display.Mode mode : modes) {
                     float refreshRate = mode.getRefreshRate();
                     if (refreshRate > maxSupportedFps) {
