@@ -9,28 +9,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:choiceMode="singleChoice"
-        android:fontFamily="@font/players" />
+        android:layout_marginStart="12dp" />
 
     <ListView
         android:id="@+id/fpsList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:choiceMode="singleChoice"
-        android:fontFamily="@font/players" />
-
-    <CheckBox
-        android:id="@+id/perfOverlayCheckBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/title_enable_perf_overlay"
-        android:fontFamily="@font/players" />
+        android:layout_marginStart="12dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:padding="16dp">
+        android:padding="12dp">
 
         <SeekBar
             android:id="@+id/bitrateSeekBar"
@@ -42,14 +35,19 @@
             android:id="@+id/bitrateValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/players"
             android:layout_marginStart="8dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/suffix_seekbar_bitrate_mbps"
-            android:fontFamily="@font/players"
             android:layout_marginStart="4dp" />
     </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/perfOverlayCheckBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/title_enable_perf_overlay"
+        android:layout_marginStart="16dp" />
 </LinearLayout>
