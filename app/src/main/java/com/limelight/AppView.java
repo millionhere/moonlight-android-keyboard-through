@@ -332,107 +332,105 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
                 Service.BIND_AUTO_CREATE);
 
         // Setup the resolution setting list view
-        ImageButton resSettingButton = findViewById(R.id.resSettingButton);
-        resSettingButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(AppView.this);
-                final int nativeWidth = getWindowManager().getDefaultDisplay().getMode().getPhysicalWidth();
-                final int nativeHeight = getWindowManager().getDefaultDisplay().getMode().getPhysicalHeight();
+        ImageButton quickSettingButton = findViewById(R.id.quickSettingButton);
+        quickSettingButton.setOnClickListener(v -> {
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(AppView.this);
+            final int nativeWidth = getWindowManager().getDefaultDisplay().getMode().getPhysicalWidth();
+            final int nativeHeight = getWindowManager().getDefaultDisplay().getMode().getPhysicalHeight();
 
-                int width = Math.max(nativeWidth, nativeHeight);
-                int height = Math.min(nativeWidth, nativeHeight);
+            int width = Math.max(nativeWidth, nativeHeight);
+            int height = Math.min(nativeWidth, nativeHeight);
 
-                ArrayList<String> resEntries = new ArrayList<>();
-                ArrayList<String> resValues = new ArrayList<>();
-                {resValues.add(width+"x"+height); resEntries.add("Native "+resValues.get(resValues.size()-1));}
-                if (width*10/16 < height-1) {resValues.add(width+"x"+(int)Math.floor(width*10/16)); resEntries.add("Native 16:10 "+resValues.get(resValues.size()-1));}
-                if (width*9/16 < height-1) {resValues.add(width+"x"+(int)Math.floor(width*9/16)); resEntries.add("Native 16:9 "+resValues.get(resValues.size()-1));}
-                if (width*9/17 < height-1) {resValues.add(width+"x"+(int)Math.floor(width*9/17)); resEntries.add("Native 17:9 "+resValues.get(resValues.size()-1));}
-                if (width*9/21 < height-1) {resValues.add(width+"x"+(int)Math.floor(width*9/21)); resEntries.add("Native 21:9 "+resValues.get(resValues.size()-1));}
+            ArrayList<String> resEntries = new ArrayList<>();
+            ArrayList<String> resValues = new ArrayList<>();
+            {resValues.add(width+"x"+height); resEntries.add("Native "+resValues.get(resValues.size()-1));}
+            if (width*10/16 < height-1) {resValues.add(width+"x"+(int)Math.floor(width*10/16)); resEntries.add("Native 16:10 "+resValues.get(resValues.size()-1));}
+            if (width*9/16 < height-1) {resValues.add(width+"x"+(int)Math.floor(width*9/16)); resEntries.add("Native 16:9 "+resValues.get(resValues.size()-1));}
+            if (width*9/17 < height-1) {resValues.add(width+"x"+(int)Math.floor(width*9/17)); resEntries.add("Native 17:9 "+resValues.get(resValues.size()-1));}
+            if (width*9/21 < height-1) {resValues.add(width+"x"+(int)Math.floor(width*9/21)); resEntries.add("Native 21:9 "+resValues.get(resValues.size()-1));}
 
-                final String[] resEntryStrings = resEntries.toArray(new String[0]);
-                final String[] resValueStrings = resValues.toArray(new String[0]);
-                final String resSelectedString = prefs.getString(PreferenceConfiguration.RESOLUTION_PREF_STRING, PreferenceConfiguration.DEFAULT_RESOLUTION);
-                int resCheckedItem = -1;
-                for (int i = 0; i < resValueStrings.length; i++) {
-                    if (resValueStrings[i].equals(resSelectedString)) {
-                        resCheckedItem = i;
-                        break;
-                    }
+            final String[] resEntryStrings = resEntries.toArray(new String[0]);
+            final String[] resValueStrings = resValues.toArray(new String[0]);
+            final String resSelectedString = prefs.getString(PreferenceConfiguration.RESOLUTION_PREF_STRING, PreferenceConfiguration.DEFAULT_RESOLUTION);
+            int resCheckedItem = -1;
+            for (int i = 0; i < resValueStrings.length; i++) {
+                if (resValueStrings[i].equals(resSelectedString)) {
+                    resCheckedItem = i;
+                    break;
                 }
-
-                final String[] fpsEntryStrings = getResources().getStringArray(R.array.fps_names);
-                final String[] fpsValueStrings = getResources().getStringArray(R.array.fps_values);
-                final String fpsSelectedString = prefs.getString(PreferenceConfiguration.FPS_PREF_STRING, PreferenceConfiguration.DEFAULT_FPS);
-                int fpsCheckedItem = -1;
-                for (int i = 0; i < fpsValueStrings.length; i++) {
-                    if (fpsValueStrings[i].equals(fpsSelectedString)) {
-                        fpsCheckedItem = i;
-                        break;
-                    }
-                }
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(AppView.this);
-                View customView = getLayoutInflater().inflate(R.layout.activity_resolution_dialog, null);
-
-                ListView resolutionList = customView.findViewById(R.id.resolutionList);
-                ListView fpsList = customView.findViewById(R.id.fpsList);
-                ArrayAdapter<String> resAdapter = new ArrayAdapter<>(AppView.this, 
-                    android.R.layout.simple_list_item_single_choice, 
-                    resEntryStrings);
-                ArrayAdapter<String> fpsAdapter = new ArrayAdapter<>(AppView.this,
-                    android.R.layout.simple_list_item_single_choice,
-                    fpsEntryStrings);
-                resolutionList.setAdapter(resAdapter);
-                fpsList.setAdapter(fpsAdapter);
-                resolutionList.setItemChecked(resCheckedItem, true);
-                fpsList.setItemChecked(fpsCheckedItem, true);
-
-                SeekBar bitrateSeekBar = customView.findViewById(R.id.bitrateSeekBar);
-                TextView bitrateValue = customView.findViewById(R.id.bitrateValue);
-                final int minBitrate = 500;
-                final int maxBitrate = 150000;
-                final int stepSize = 500;
-                int currentBitrate = prefs.getInt(PreferenceConfiguration.BITRATE_PREF_STRING, PreferenceConfiguration.getDefaultBitrate(AppView.this));
-                bitrateSeekBar.setMax((maxBitrate - minBitrate) / stepSize);
-                bitrateSeekBar.setProgress((currentBitrate - minBitrate) / stepSize);
-                bitrateValue.setText(String.format("%.1f", currentBitrate / 1000.0f));
-                bitrateSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                    @Override
-                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                        int bitrate = minBitrate + (progress * stepSize);
-                        bitrateValue.setText(String.format("%.1f", bitrate / 1000.0f));
-                    }
-
-                    @Override
-                    public void onStartTrackingTouch(SeekBar seekBar) {}
-
-                    @Override
-                    public void onStopTrackingTouch(SeekBar seekBar) {}
-                });
-                
-                CheckBox perfOverlayCheckBox = customView.findViewById(R.id.perfOverlayCheckBox);
-                perfOverlayCheckBox.setChecked(prefs.getBoolean(PreferenceConfiguration.ENABLE_PERF_OVERLAY_STRING, false));
-                
-                builder.setTitle(getString(R.string.title_resolution_list) + " & " + getString(R.string.title_seekbar_bitrate))
-                    .setView(customView)
-                    .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                        prefs.edit()
-                            .putString(PreferenceConfiguration.RESOLUTION_PREF_STRING, 
-                                    resValueStrings[resolutionList.getCheckedItemPosition()])
-                            .putString(PreferenceConfiguration.FPS_PREF_STRING, 
-                                    fpsValueStrings[fpsList.getCheckedItemPosition()])
-                            .putInt(PreferenceConfiguration.BITRATE_PREF_STRING,
-                                    minBitrate + (bitrateSeekBar.getProgress() * stepSize))
-                            .putBoolean(PreferenceConfiguration.ENABLE_PERF_OVERLAY_STRING, 
-                                    perfOverlayCheckBox.isChecked())
-                            .apply();
-                    })
-                    .setNegativeButton(android.R.string.cancel, null)
-                    .show();
             }
-        });
+
+            final String[] fpsEntryStrings = getResources().getStringArray(R.array.fps_names);
+            final String[] fpsValueStrings = getResources().getStringArray(R.array.fps_values);
+            final String fpsSelectedString = prefs.getString(PreferenceConfiguration.FPS_PREF_STRING, PreferenceConfiguration.DEFAULT_FPS);
+            int fpsCheckedItem = -1;
+            for (int i = 0; i < fpsValueStrings.length; i++) {
+                if (fpsValueStrings[i].equals(fpsSelectedString)) {
+                    fpsCheckedItem = i;
+                    break;
+                }
+            }
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(AppView.this);
+            View customView = getLayoutInflater().inflate(R.layout.activity_resolution_dialog, null);
+
+            ListView resolutionList = customView.findViewById(R.id.resolutionList);
+            ListView fpsList = customView.findViewById(R.id.fpsList);
+            ArrayAdapter<String> resAdapter = new ArrayAdapter<>(AppView.this, 
+                android.R.layout.simple_list_item_single_choice, 
+                resEntryStrings);
+            ArrayAdapter<String> fpsAdapter = new ArrayAdapter<>(AppView.this,
+                android.R.layout.simple_list_item_single_choice,
+                fpsEntryStrings);
+            resolutionList.setAdapter(resAdapter);
+            fpsList.setAdapter(fpsAdapter);
+            resolutionList.setItemChecked(resCheckedItem, true);
+            fpsList.setItemChecked(fpsCheckedItem, true);
+
+            SeekBar bitrateSeekBar = customView.findViewById(R.id.bitrateSeekBar);
+            TextView bitrateValue = customView.findViewById(R.id.bitrateValue);
+            final int minBitrate = 500;
+            final int maxBitrate = 150000;
+            final int stepSize = 500;
+            int currentBitrate = prefs.getInt(PreferenceConfiguration.BITRATE_PREF_STRING, PreferenceConfiguration.getDefaultBitrate(AppView.this));
+            bitrateSeekBar.setMax((maxBitrate - minBitrate) / stepSize);
+            bitrateSeekBar.setProgress((currentBitrate - minBitrate) / stepSize);
+            bitrateValue.setText(String.format("%.1f", currentBitrate / 1000.0f));
+            bitrateSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    int bitrate = minBitrate + (progress * stepSize);
+                    bitrateValue.setText(String.format("%.1f", bitrate / 1000.0f));
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {}
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {}
+            });
+            
+            CheckBox perfOverlayCheckBox = customView.findViewById(R.id.perfOverlayCheckBox);
+            perfOverlayCheckBox.setChecked(prefs.getBoolean(PreferenceConfiguration.ENABLE_PERF_OVERLAY_STRING, false));
+            
+            builder.setTitle(getString(R.string.title_resolution_list) + " & " + getString(R.string.title_seekbar_bitrate))
+                .setView(customView)
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                    prefs.edit()
+                        .putString(PreferenceConfiguration.RESOLUTION_PREF_STRING, 
+                                resValueStrings[resolutionList.getCheckedItemPosition()])
+                        .putString(PreferenceConfiguration.FPS_PREF_STRING, 
+                                fpsValueStrings[fpsList.getCheckedItemPosition()])
+                        .putInt(PreferenceConfiguration.BITRATE_PREF_STRING,
+                                minBitrate + (bitrateSeekBar.getProgress() * stepSize))
+                        .putBoolean(PreferenceConfiguration.ENABLE_PERF_OVERLAY_STRING, 
+                                perfOverlayCheckBox.isChecked())
+                        .apply();
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+            }
+        );
     }
 
     private void updateHiddenApps(boolean hideImmediately) {
