@@ -197,7 +197,7 @@ public class PcView extends Activity implements AdapterFragmentCallbacks {
                 }
             }
 
-            float maxSupportedFps = getWindowManager().getDefaultDisplay().getRefreshRate();
+            final float maxSupportedFps = getWindowManager().getDefaultDisplay().getMode().getRefreshRate();
             ArrayList<String> fpsEntries = new ArrayList<>();
             ArrayList<String> fpsValues = new ArrayList<>();
             for (float ratio : new float[]{1.0f/4.0f, 1.0f/3.0f, 1.0f/2.0f, 2.0f/3.0f, 1.0f}) {
