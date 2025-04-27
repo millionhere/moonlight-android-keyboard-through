@@ -50,9 +50,11 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -385,7 +387,7 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
                 fpsList.setAdapter(fpsAdapter);
                 resolutionList.setItemChecked(resCheckedItem, true);
                 fpsList.setItemChecked(fpsCheckedItem, true);
-                
+
                 CheckBox perfOverlayCheckBox = customView.findViewById(R.id.perfOverlayCheckBox);
                 perfOverlayCheckBox.setChecked(prefs.getBoolean(PreferenceConfiguration.ENABLE_PERF_OVERLAY_STRING, false));
                 
