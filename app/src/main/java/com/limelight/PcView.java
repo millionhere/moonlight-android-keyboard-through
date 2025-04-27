@@ -239,6 +239,12 @@ public class PcView extends Activity implements AdapterFragmentCallbacks {
                     int bitrate = minBitrate + (progress * stepSize);
                     bitrateValue.setText(String.format("%.1f", bitrate / 1000.0f));
                 }
+                
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {}
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {}
             });
 
             CheckBox perfOverlayCheckBox = customView.findViewById(R.id.perfOverlayCheckBox);
