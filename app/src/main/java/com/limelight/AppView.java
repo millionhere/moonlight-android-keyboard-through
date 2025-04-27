@@ -407,9 +407,9 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
 
             SeekBar bitrateSeekBar = customView.findViewById(R.id.bitrateSeekBar);
             TextView bitrateValue = customView.findViewById(R.id.bitrateValue);
-            final int minBitrate = 500;
+            final int minBitrate = 2000;
             final int maxBitrate = 150000;
-            final int stepSize = 500;
+            final int stepSize = 2000;
             int currentBitrate = prefs.getInt(PreferenceConfiguration.BITRATE_PREF_STRING, PreferenceConfiguration.getDefaultBitrate(AppView.this));
             bitrateSeekBar.setMax((maxBitrate - minBitrate) / stepSize);
             bitrateSeekBar.setProgress((currentBitrate - minBitrate) / stepSize);
