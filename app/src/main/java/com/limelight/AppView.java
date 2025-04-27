@@ -360,9 +360,9 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
                 }
             }
 
-            final float maxSupportedFps = getWindowManager().getDefaultDisplay().getRefreshRate();
+            float maxSupportedFps = getWindowManager().getDefaultDisplay().getRefreshRate();
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                Display.Mode[] modes = display.getSupportedModes();
+                Display.Mode[] modes = getWindowManager().getDefaultDisplay().getSupportedModes();
                 for (Display.Mode mode : modes) {
                     float refreshRate = mode.getRefreshRate();
                     if (refreshRate > maxSupportedFps) {
