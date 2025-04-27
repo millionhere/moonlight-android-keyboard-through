@@ -340,38 +340,67 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
                 int width = Math.max(nativeWidth, nativeHeight);
                 int height = Math.min(nativeWidth, nativeHeight);
 
-                ArrayList<String> entries = new ArrayList<>();
-                ArrayList<String> entryValues = new ArrayList<>();
-                {entryValues.add(width+"x"+height); entries.add("Native "+entryValues.get(entryValues.size()-1));}
-                if (width*10/16 < height-1) {entryValues.add(width+"x"+(int)Math.floor(width*10/16)); entries.add("Native 16:10 "+entryValues.get(entryValues.size()-1));}
-                if (width*9/16 < height-1) {entryValues.add(width+"x"+(int)Math.floor(width*9/16)); entries.add("Native 16:9 "+entryValues.get(entryValues.size()-1));}
-                if (width*9/17 < height-1) {entryValues.add(width+"x"+(int)Math.floor(width*9/17)); entries.add("Native 17:9 "+entryValues.get(entryValues.size()-1));}
-                if (width*9/21 < height-1) {entryValues.add(width+"x"+(int)Math.floor(width*9/21)); entries.add("Native 21:9 "+entryValues.get(entryValues.size()-1));}
+                ArrayList<String> resEntries = new ArrayList<>();
+                ArrayList<String> resValues = new ArrayList<>();
+                {resValues.add(width+"x"+height); resEntries.add("Native "+resValues.get(resValues.size()-1));}
+                if (width*10/16 < height-1) {resValues.add(width+"x"+(int)Math.floor(width*10/16)); resEntries.add("Native 16:10 "+resValues.get(resValues.size()-1));}
+                if (width*9/16 < height-1) {resValues.add(width+"x"+(int)Math.floor(width*9/16)); resEntries.add("Native 16:9 "+resValues.get(resValues.size()-1));}
+                if (width*9/17 < height-1) {resValues.add(width+"x"+(int)Math.floor(width*9/17)); resEntries.add("Native 17:9 "+resValues.get(resValues.size()-1));}
+                if (width*9/21 < height-1) {resValues.add(width+"x"+(int)Math.floor(width*9/21)); resEntries.add("Native 21:9 "+resValues.get(resValues.size()-1));}
 
-                final String[] entryStrings = entries.toArray(new String[0]);
-                final String[] entryValueStrings = entryValues.toArray(new String[0]);
-                final String selectedResolutionString = prefs.getString(PreferenceConfiguration.RESOLUTION_PREF_STRING, PreferenceConfiguration.DEFAULT_RESOLUTION);
-                int checkedItem = -1;
-                for (int i = 0; i < entryValueStrings.length; i++) {
-                    if (entryValueStrings[i].equals(selectedResolutionString)) {
-                        checkedItem = i;
+                final String[] resEntryStrings = resEntries.toArray(new String[0]);
+                final String[] resValueStrings = resValues.toArray(new String[0]);
+                final String resSelectedString = prefs.getString(PreferenceConfiguration.RESOLUTION_PREF_STRING, PreferenceConfiguration.DEFAULT_RESOLUTION);
+                int resCheckedItem = -1;
+                for (int i = 0; i < resValueStrings.length; i++) {
+                    if (resValueStrings[i].equals(resSelectedString)) {
+                        resCheckedItem = i;
+                        break;
+                    }
+                }
+
+                final String[] fpsEntryStrings = getResources().getStringArray(R.array.fps_names);
+                final String[] fpsValueStrings = getResources().getStringArray(R.array.fps_values);
+                final String fpsSelectedString = prefs.getString(PreferenceConfiguration.FPS_PREF_STRING, PreferenceConfiguration.DEFAULT_FPS);
+                int fpsCheckedItem = -1;
+                for (int i = 0; i < fpsValueStrings.length; i++) {
+                    if (fpsValueStrings[i].equals(fpsSelectedString)) {
+                        fpsCheckedItem = i;
                         break;
                     }
                 }
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(AppView.this);
                 View customView = getLayoutInflater().inflate(R.layout.activity_resolution_dialog, null);
+
+                ListView resolutionList = customView.findViewById(R.id.resolutionList);
+                ListView fpsList = customView.findViewById(R.id.fpsList);
+                ArrayAdapter<String> resAdapter = new ArrayAdapter<>(AppView.this, 
+                    android.R.layout.simple_list_item_single_choice, 
+                    resEntryStrings);
+                ArrayAdapter<String> fpsAdapter = new ArrayAdapter<>(AppView.this,
+                    android.R.layout.simple_list_item_single_choice,
+                    fpsEntryStrings);
+                resolutionList.setAdapter(resAdapter);
+                fpsList.setAdapter(fpsAdapter);
+                resolutionList.setItemChecked(resCheckedItem, true);
+                fpsList.setItemChecked(fpsCheckedItem, true);
+                
                 CheckBox perfOverlayCheckBox = customView.findViewById(R.id.perfOverlayCheckBox);
                 perfOverlayCheckBox.setChecked(prefs.getBoolean(PreferenceConfiguration.ENABLE_PERF_OVERLAY_STRING, false));
+                
                 builder.setTitle(R.string.title_resolution_list)
-                    .setSingleChoiceItems(entryStrings, checkedItem, (dialog, which) -> {
-                        prefs.edit()
-                            .putString(PreferenceConfiguration.RESOLUTION_PREF_STRING, entryValueStrings[which])
-                            .putBoolean(PreferenceConfiguration.ENABLE_PERF_OVERLAY_STRING, perfOverlayCheckBox.isChecked())
-                            .apply();
-                        dialog.dismiss();
-                    })
                     .setView(customView)
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                        prefs.edit()
+                            .putString(PreferenceConfiguration.RESOLUTION_PREF_STRING, 
+                                    resValueStrings[resolutionList.getCheckedItemPosition()])
+                            .putString(PreferenceConfiguration.FPS_PREF_STRING, 
+                                    fpsValueStrings[fpsList.getCheckedItemPosition()])
+                            .putBoolean(PreferenceConfiguration.ENABLE_PERF_OVERLAY_STRING, 
+                                    perfOverlayCheckBox.isChecked())
+                            .apply();
+                    })
                     .setNegativeButton(android.R.string.cancel, null)
                     .show();
             }
