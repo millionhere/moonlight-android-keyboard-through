@@ -9,21 +9,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:choiceMode="singleChoice"
-        android:layout_marginStart="12dp" />
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp" />
 
     <ListView
         android:id="@+id/fpsList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:choiceMode="singleChoice"
-        android:layout_marginStart="12dp" />
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:padding="12dp">
+        android:padding="6dp">
 
         <SeekBar
             android:id="@+id/bitrateSeekBar"
@@ -34,8 +36,7 @@
         <TextView
             android:id="@+id/bitrateValue"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp" />
+            android:layout_height="wrap_content" />
 
         <TextView
             android:layout_width="wrap_content"
