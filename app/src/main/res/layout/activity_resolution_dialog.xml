@@ -4,6 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <View style="@style/ListDivider" />
+
     <ListView
         android:id="@+id/resolutionList"
         android:layout_width="match_parent"
@@ -12,14 +14,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp" />
     
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="?android:attr/listDivider"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp" />
+    <View style="@style/ListDivider" />
 
     <ListView
         android:id="@+id/fpsList"
@@ -28,6 +23,8 @@
         android:choiceMode="singleChoice"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp" />
+    
+    <View style="@style/ListDivider" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,17 +40,17 @@
 
         <TextView
             android:id="@+id/bitrateValue"
-            android:layout_width="45dp"
+            android:layout_width="35dp"
             android:layout_height="wrap_content"
             android:gravity="end"
-            android:minWidth="45dp" />
+            android:minWidth="35dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/suffix_seekbar_bitrate_mbps"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="6dp" />
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="12dp" />
     </LinearLayout>
 
     <CheckBox
@@ -61,5 +58,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/title_enable_perf_overlay"
-        android:layout_marginStart="16dp" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp" />
 </LinearLayout>
