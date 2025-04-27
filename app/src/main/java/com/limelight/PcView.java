@@ -751,10 +751,19 @@ public class PcView extends Activity implements AdapterFragmentCallbacks {
         listView.setAdapter(pcGridAdapter);
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long id) {
+            public void onItemClick(AdapterView<?> arg0, View arg1, int pos,
+                                    long id) {
                 ComputerObject computer = (ComputerObject) pcGridAdapter.getItem(pos);
-                // ’¼Ú?—p doAppListCš—ªŠ—LğŒ??
-                doAppList(computer.details, false, false);
+                if (computer.details.state == ComputerDetails.State.UNKNOWN ||
+                    computer.details.state == ComputerDetails.State.OFFLINE) {
+                    // Open the context menu if a PC is offline or refreshing
+                    openContextMenu(arg1);
+                } else if (computer.details.pairState != PairState.PAIRED) {
+                    // Pair an unpaired machine by default
+                    doPair(computer.details);
+                } else {
+                    doAppList(computer.details, false, false);
+                }
             }
         });
         UiHelper.applyStatusBarPadding(listView);
