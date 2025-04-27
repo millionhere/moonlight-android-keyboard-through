@@ -227,10 +227,10 @@
     <string name="resolution_480p">480p</string>
     <string name="resolution_1440p">1440p</string>
     <string name="resolution_4k">4K</string>
-    <string name="fps_30">48 FPS</string>
-    <string name="fps_60">72 FPS</string>
-    <string name="fps_90">96 FPS</string>
-    <string name="fps_120">144 FPS</string>
+    <string name="fps_30">30 FPS</string>
+    <string name="fps_60">60 FPS</string>
+    <string name="fps_90">90 FPS</string>
+    <string name="fps_120">120 FPS</string>
     <string name="resolution_1080p">1080p</string>
     <string name="resolution_720p">720p</string>
     <string name="pacing_balanced">平衡</string>
