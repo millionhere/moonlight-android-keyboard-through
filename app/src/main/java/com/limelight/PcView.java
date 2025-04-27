@@ -197,8 +197,17 @@ public class PcView extends Activity implements AdapterFragmentCallbacks {
                 }
             }
 
-            final String[] fpsEntryStrings = getResources().getStringArray(R.array.fps_names);
-            final String[] fpsValueStrings = getResources().getStringArray(R.array.fps_values);
+            float maxSupportedFps = getWindowManager().getDefaultDisplay().getRefreshRate();
+            ArrayList<String> fpsEntries = new ArrayList<>();
+            ArrayList<String> fpsValues = new ArrayList<>();
+            for (float ratio : new float[]{1.0f/4.0f, 1.0f/3.0f, 1.0f/2.0f, 2.0f/3.0f, 1.0f}) {
+                int fps = Math.round(maxSupportedFps * ratio);
+                fpsValues.add(String.valueOf(fps));
+                fpsEntries.add(fps + " FPS");
+            }
+
+            final String[] fpsEntryStrings = fpsEntries.toArray(new String[0]);
+            final String[] fpsValueStrings = fpsValues.toArray(new String[0]);
             final String fpsSelectedString = prefs.getString(PreferenceConfiguration.FPS_PREF_STRING, PreferenceConfiguration.DEFAULT_FPS);
             int fpsCheckedItem = -1;
             for (int i = 0; i < fpsValueStrings.length; i++) {
@@ -239,7 +248,7 @@ public class PcView extends Activity implements AdapterFragmentCallbacks {
                     int bitrate = minBitrate + (progress * stepSize);
                     bitrateValue.setText(String.format("%.1f", bitrate / 1000.0f));
                 }
-                
+
                 @Override
                 public void onStartTrackingTouch(SeekBar seekBar) {}
 
