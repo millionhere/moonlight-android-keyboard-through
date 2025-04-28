@@ -63,9 +63,8 @@ import android.widget.SeekBar;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.TextView;
-import android.view.ViewGroup;
-import java.util.stream.IntStream;
+import android.widget.RadioGroup;
+import android.widget.RadioButton;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -232,44 +231,26 @@ public class PcView extends Activity implements AdapterFragmentCallbacks {
             AlertDialog.Builder builder = new AlertDialog.Builder(PcView.this);
             View customView = getLayoutInflater().inflate(R.layout.activity_resolution_dialog, null);
 
-            ListView resolutionList = customView.findViewById(R.id.resolutionList);
-            ListView fpsList = customView.findViewById(R.id.fpsList);
-            ArrayAdapter<String> resAdapter = new ArrayAdapter<>(PcView.this, 
-                android.R.layout.simple_list_item_single_choice, 
-                resEntryStrings);
-            ArrayAdapter<String> fpsAdapter = new ArrayAdapter<>(PcView.this,
-                android.R.layout.simple_list_item_single_choice,
-                fpsEntryStrings);
-            resolutionList.setAdapter(resAdapter);
-            fpsList.setAdapter(fpsAdapter);
-            resolutionList.post(() -> {
-                int totalHeight = resAdapter.getCount() > 0 ? IntStream.range(0, resAdapter.getCount())
-                    .mapToObj(i -> resAdapter.getView(i, null, resolutionList))
-                    .peek(l -> l.measure(
-                        View.MeasureSpec.makeMeasureSpec(resolutionList.getWidth(), View.MeasureSpec.EXACTLY),
-                        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)))
-                    .mapToInt(View::getMeasuredHeight)
-                    .sum() : 0;
-                
-                ViewGroup.LayoutParams params = resolutionList.getLayoutParams();
-                params.height = totalHeight + resolutionList.getDividerHeight() * (resAdapter.getCount() - 1);
-                resolutionList.setLayoutParams(params);
-            });
-            fpsList.post(() -> {               
-                int totalHeight = fpsAdapter.getCount() > 0 ? IntStream.range(0, fpsAdapter.getCount())
-                    .mapToObj(i -> fpsAdapter.getView(i, null, fpsList))
-                    .peek(l -> l.measure(
-                        View.MeasureSpec.makeMeasureSpec(fpsList.getWidth(), View.MeasureSpec.EXACTLY),
-                        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)))
-                    .mapToInt(View::getMeasuredHeight)
-                    .sum() : 0;
-                
-                ViewGroup.LayoutParams params = fpsList.getLayoutParams();
-                params.height = totalHeight + fpsList.getDividerHeight() * (fpsAdapter.getCount() - 1);
-                fpsList.setLayoutParams(params);
-            });
-            resolutionList.setItemChecked(resCheckedItem, true);
-            fpsList.setItemChecked(fpsCheckedItem, true);
+            RadioGroup resGroup = customView.findViewById(R.id.resGroup);
+            RadioGroup fpsGroup = customView.findViewById(R.id.fpsGroup);
+            for (int i = 0; i < resEntryStrings.length; i++) {
+                RadioButton rb = new RadioButton(this);
+                rb.setText(resEntryStrings[i]);
+                rb.setId(i);
+                if (i == resCheckedItem) {
+                    rb.setChecked(true);
+                }
+                resGroup.addView(rb);
+            }
+            for (int i = 0; i < fpsEntryStrings.length; i++) {
+                RadioButton rb = new RadioButton(this);
+                rb.setText(fpsEntryStrings[i]);
+                rb.setId(i);
+                if (i == fpsCheckedItem) {
+                    rb.setChecked(true);
+                }
+                fpsGroup.addView(rb);
+            }
 
             SeekBar bitrateSeekBar = customView.findViewById(R.id.bitrateSeekBar);
             TextView bitrateValue = customView.findViewById(R.id.bitrateValue);
@@ -302,9 +283,9 @@ public class PcView extends Activity implements AdapterFragmentCallbacks {
                 .setPositiveButton(android.R.string.ok, (dialog, which) -> {
                     prefs.edit()
                         .putString(PreferenceConfiguration.RESOLUTION_PREF_STRING, 
-                                resValueStrings[resolutionList.getCheckedItemPosition()])
+                                resValueStrings[resGroup.getCheckedRadioButtonId()])
                         .putString(PreferenceConfiguration.FPS_PREF_STRING, 
-                                fpsValueStrings[fpsList.getCheckedItemPosition()])
+                                fpsValueStrings[fpsGroup.getCheckedRadioButtonId()])
                         .putInt(PreferenceConfiguration.BITRATE_PREF_STRING,
                                 minBitrate + (bitrateSeekBar.getProgress() * stepSize))
                         .putBoolean(PreferenceConfiguration.ENABLE_PERF_OVERLAY_STRING, 
