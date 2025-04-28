@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:fillViewport="true"
-    android:scrollbars="none">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
     
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,10 +15,10 @@
             android:id="@+id/resolutionList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="100dp"
             android:choiceMode="singleChoice"
             android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:scrollbars="none" />
+            android:layout_marginEnd="12dp" />
         
         <View style="@style/ListDivider" />
 
@@ -27,10 +26,10 @@
             android:id="@+id/fpsList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="100dp"
             android:choiceMode="singleChoice"
             android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:scrollbars="none" />
+            android:layout_marginEnd="12dp" />
         
         <View style="@style/ListDivider" />
 
