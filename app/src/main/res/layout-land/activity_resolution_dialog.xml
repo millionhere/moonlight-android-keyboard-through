@@ -19,7 +19,7 @@
                 android:id="@+id/resGroup"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="6dp"
                 android:orientation="vertical" />
@@ -47,7 +47,8 @@
                 android:id="@+id/bitrateSeekBar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:layout_marginStart="2dp" />
 
             <TextView
                 android:id="@+id/bitrateValue"
@@ -61,7 +62,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/suffix_seekbar_bitrate_mbps"
-                android:layout_marginStart="2dp"
                 android:layout_marginEnd="12dp" />
         </LinearLayout>
 
