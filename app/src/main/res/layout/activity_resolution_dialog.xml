@@ -40,10 +40,11 @@
 
         <TextView
             android:id="@+id/bitrateValue"
-            android:layout_width="35dp"
+            android:layout_width="32dp"
             android:layout_height="wrap_content"
             android:gravity="end"
-            android:minWidth="35dp" />
+            android:minWidth="32dp"
+            android:maxLines="1" />
 
         <TextView
             android:layout_width="wrap_content"
