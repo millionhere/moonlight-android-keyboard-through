@@ -63,6 +63,7 @@ import android.widget.SeekBar;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.TextView;
 import android.widget.RadioGroup;
 import android.widget.RadioButton;
 
