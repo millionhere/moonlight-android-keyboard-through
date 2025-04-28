@@ -251,12 +251,12 @@ public class PcView extends Activity implements AdapterFragmentCallbacks {
             int currentBitrate = prefs.getInt(PreferenceConfiguration.BITRATE_PREF_STRING, PreferenceConfiguration.getDefaultBitrate(PcView.this));
             bitrateSeekBar.setMax((maxBitrate - minBitrate) / stepSize);
             bitrateSeekBar.setProgress((currentBitrate - minBitrate) / stepSize);
-            bitrateValue.setText(String.format("%.1f", currentBitrate / 1000.0f));
+            bitrateValue.setText(String.format("%.0f", currentBitrate / 1000.0f));
             bitrateSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     int bitrate = minBitrate + (progress * stepSize);
-                    bitrateValue.setText(String.format("%.1f", bitrate / 1000.0f));
+                    bitrateValue.setText(String.format("%.0f", bitrate / 1000.0f));
                 }
 
                 @Override
@@ -879,7 +879,7 @@ public class PcView extends Activity implements AdapterFragmentCallbacks {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long id) {
                 ComputerObject computer = (ComputerObject) pcGridAdapter.getItem(pos);
-                // ï¿½ï¿½ï¿½ï¿½?ï¿½p doAppListï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½ï¿½??
+                // ?¿½?¿½?¿½?¿½??¿½p doAppList?¿½C?¿½?¿½?¿½?¿½?¿½?¿½?¿½L?¿½?¿½?¿½?¿½??
                 doAppList(computer.details, false, false);
             }
         });
