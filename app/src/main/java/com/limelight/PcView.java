@@ -240,6 +240,32 @@ public class PcView extends Activity implements AdapterFragmentCallbacks {
                 fpsEntryStrings);
             resolutionList.setAdapter(resAdapter);
             fpsList.setAdapter(fpsAdapter);
+            resolutionList.post(() -> {
+                int totalHeight = resAdapter.getCount() > 0 ? IntStream.range(0, resAdapter.getCount())
+                    .mapToObj(i -> resAdapter.getView(i, null, resolutionList))
+                    .peek(v -> v.measure(
+                        View.MeasureSpec.makeMeasureSpec(resolutionList.getWidth(), View.MeasureSpec.EXACTLY),
+                        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)))
+                    .mapToInt(View::getMeasuredHeight)
+                    .sum() : 0;
+                
+                ViewGroup.LayoutParams params = resolutionList.getLayoutParams();
+                params.height = totalHeight + resolutionList.getDividerHeight() * (resAdapter.getCount() - 1);
+                resolutionList.setLayoutParams(params);
+            });
+            fpsList.post(() -> {               
+                int totalHeight = fpsAdapter.getCount() > 0 ? IntStream.range(0, fpsAdapter.getCount())
+                    .mapToObj(i -> fpsAdapter.getView(i, null, fpsList))
+                    .peek(v -> v.measure(
+                        View.MeasureSpec.makeMeasureSpec(fpsList.getWidth(), View.MeasureSpec.EXACTLY),
+                        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)))
+                    .mapToInt(View::getMeasuredHeight)
+                    .sum() : 0;
+                
+                ViewGroup.LayoutParams params = fpsList.getLayoutParams();
+                params.height = totalHeight + fpsList.getDividerHeight() * (fpsAdapter.getCount() - 1);
+                fpsList.setLayoutParams(params);
+            });
             resolutionList.setItemChecked(resCheckedItem, true);
             fpsList.setItemChecked(fpsCheckedItem, true);
 
