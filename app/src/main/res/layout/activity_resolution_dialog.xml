@@ -2,63 +2,72 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <View style="@style/ListDivider" />
-
-    <ListView
-        android:id="@+id/resolutionList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:choiceMode="singleChoice"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp" />
+    android:fillViewport="true"
+    android:scrollbars="none">
     
-    <View style="@style/ListDivider" />
-
-    <ListView
-        android:id="@+id/fpsList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:choiceMode="singleChoice"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp" />
-    
-    <View style="@style/ListDivider" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:orientation="vertical">
 
-        <SeekBar
-            android:id="@+id/bitrateSeekBar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+        <View style="@style/ListDivider" />
 
-        <TextView
-            android:id="@+id/bitrateValue"
-            android:layout_width="32dp"
+        <ListView
+            android:id="@+id/resolutionList"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="end"
-            android:minWidth="32dp"
-            android:maxLines="1" />
+            android:choiceMode="singleChoice"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:scrollbars="none" />
+        
+        <View style="@style/ListDivider" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <ListView
+            android:id="@+id/fpsList"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/suffix_seekbar_bitrate_mbps"
-            android:layout_marginStart="2dp"
-            android:layout_marginEnd="12dp" />
+            android:choiceMode="singleChoice"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:scrollbars="none" />
+        
+        <View style="@style/ListDivider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <SeekBar
+                android:id="@+id/bitrateSeekBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/bitrateValue"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:minWidth="32dp"
+                android:maxLines="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/suffix_seekbar_bitrate_mbps"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="12dp" />
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/perfOverlayCheckBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_enable_perf_overlay"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp" />
     </LinearLayout>
-
-    <CheckBox
-        android:id="@+id/perfOverlayCheckBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/title_enable_perf_overlay"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp" />
 </LinearLayout>
