@@ -20,7 +20,7 @@
         
         <View style="@style/ListDivider" />
 
-        <ListView
+        <RadioGroup
             android:id="@+id/fpsGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
