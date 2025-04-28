@@ -64,6 +64,8 @@ import android.widget.ListView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.view.ViewGroup;
+import java.util.stream.IntStream;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -243,7 +245,7 @@ public class PcView extends Activity implements AdapterFragmentCallbacks {
             resolutionList.post(() -> {
                 int totalHeight = resAdapter.getCount() > 0 ? IntStream.range(0, resAdapter.getCount())
                     .mapToObj(i -> resAdapter.getView(i, null, resolutionList))
-                    .peek(v -> v.measure(
+                    .peek(l -> l.measure(
                         View.MeasureSpec.makeMeasureSpec(resolutionList.getWidth(), View.MeasureSpec.EXACTLY),
                         View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)))
                     .mapToInt(View::getMeasuredHeight)
@@ -256,7 +258,7 @@ public class PcView extends Activity implements AdapterFragmentCallbacks {
             fpsList.post(() -> {               
                 int totalHeight = fpsAdapter.getCount() > 0 ? IntStream.range(0, fpsAdapter.getCount())
                     .mapToObj(i -> fpsAdapter.getView(i, null, fpsList))
-                    .peek(v -> v.measure(
+                    .peek(l -> l.measure(
                         View.MeasureSpec.makeMeasureSpec(fpsList.getWidth(), View.MeasureSpec.EXACTLY),
                         View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)))
                     .mapToInt(View::getMeasuredHeight)
@@ -905,7 +907,6 @@ public class PcView extends Activity implements AdapterFragmentCallbacks {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long id) {
                 ComputerObject computer = (ComputerObject) pcGridAdapter.getItem(pos);
-                // ?申?申?申?申??申p doAppList?申C?申?申?申?申?申?申?申L?申?申?申?申??
                 doAppList(computer.details, false, false);
             }
         });
