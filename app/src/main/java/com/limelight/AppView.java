@@ -50,11 +50,11 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.RadioGroup;
+import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -343,11 +343,15 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
 
             ArrayList<String> resEntries = new ArrayList<>();
             ArrayList<String> resValues = new ArrayList<>();
-            {resValues.add(width+"x"+height); resEntries.add("Native "+resValues.get(resValues.size()-1));}
-            if (width*10/16 < height-1) {resValues.add(width+"x"+(int)Math.floor(width*10/16)); resEntries.add("Native 16:10 "+resValues.get(resValues.size()-1));}
-            if (width*9/16 < height-1) {resValues.add(width+"x"+(int)Math.floor(width*9/16)); resEntries.add("Native 16:9 "+resValues.get(resValues.size()-1));}
-            if (width*9/17 < height-1) {resValues.add(width+"x"+(int)Math.floor(width*9/17)); resEntries.add("Native 17:9 "+resValues.get(resValues.size()-1));}
-            if (width*9/21 < height-1) {resValues.add(width+"x"+(int)Math.floor(width*9/21)); resEntries.add("Native 21:9 "+resValues.get(resValues.size()-1));}
+            resValues.add(width + "x" + height);
+            resEntries.add(getString(R.string.resolution_prefix_native_fullscreen) + " (" + resValues.get(resValues.size()-1) + ")");
+            int[][] ratios = {{16,10}, {16,9}, {17,9}, {21,9}};
+            for (int[] ratio : ratios) {
+                if (width * ratio[1] / ratio[0] < height-1) {
+                    resValues.add(width + "x" + (int)Math.floor(width * ratio[1] / (float)ratio[0]));
+                    resEntries.add(ratio[0] + ":" + ratio[1] +" ("+resValues.get(resValues.size()-1)+")");
+                }
+            }
 
             final String[] resEntryStrings = resEntries.toArray(new String[0]);
             final String[] resValueStrings = resValues.toArray(new String[0]);
@@ -392,18 +396,26 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
             AlertDialog.Builder builder = new AlertDialog.Builder(AppView.this);
             View customView = getLayoutInflater().inflate(R.layout.activity_resolution_dialog, null);
 
-            ListView resolutionList = customView.findViewById(R.id.resolutionList);
-            ListView fpsList = customView.findViewById(R.id.fpsList);
-            ArrayAdapter<String> resAdapter = new ArrayAdapter<>(AppView.this, 
-                android.R.layout.simple_list_item_single_choice, 
-                resEntryStrings);
-            ArrayAdapter<String> fpsAdapter = new ArrayAdapter<>(AppView.this,
-                android.R.layout.simple_list_item_single_choice,
-                fpsEntryStrings);
-            resolutionList.setAdapter(resAdapter);
-            fpsList.setAdapter(fpsAdapter);
-            resolutionList.setItemChecked(resCheckedItem, true);
-            fpsList.setItemChecked(fpsCheckedItem, true);
+            RadioGroup resGroup = customView.findViewById(R.id.resGroup);
+            RadioGroup fpsGroup = customView.findViewById(R.id.fpsGroup);
+            for (int i = 0; i < resEntryStrings.length; i++) {
+                RadioButton rb = new RadioButton(this);
+                rb.setText(resEntryStrings[i]);
+                rb.setId(i);
+                if (i == resCheckedItem) {
+                    rb.setChecked(true);
+                }
+                resGroup.addView(rb);
+            }
+            for (int i = 0; i < fpsEntryStrings.length; i++) {
+                RadioButton rb = new RadioButton(this);
+                rb.setText(fpsEntryStrings[i]);
+                rb.setId(i);
+                if (i == fpsCheckedItem) {
+                    rb.setChecked(true);
+                }
+                fpsGroup.addView(rb);
+            }
 
             SeekBar bitrateSeekBar = customView.findViewById(R.id.bitrateSeekBar);
             TextView bitrateValue = customView.findViewById(R.id.bitrateValue);
@@ -436,9 +448,9 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
                 .setPositiveButton(android.R.string.ok, (dialog, which) -> {
                     prefs.edit()
                         .putString(PreferenceConfiguration.RESOLUTION_PREF_STRING, 
-                                resValueStrings[resolutionList.getCheckedItemPosition()])
+                                resValueStrings[resGroup.getCheckedRadioButtonId()])
                         .putString(PreferenceConfiguration.FPS_PREF_STRING, 
-                                fpsValueStrings[fpsList.getCheckedItemPosition()])
+                                fpsValueStrings[fpsGroup.getCheckedRadioButtonId()])
                         .putInt(PreferenceConfiguration.BITRATE_PREF_STRING,
                                 minBitrate + (bitrateSeekBar.getProgress() * stepSize))
                         .putBoolean(PreferenceConfiguration.ENABLE_PERF_OVERLAY_STRING, 
