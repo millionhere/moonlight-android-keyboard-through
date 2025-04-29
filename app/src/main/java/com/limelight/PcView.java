@@ -216,7 +216,7 @@ public class PcView extends Activity implements AdapterFragmentCallbacks {
             }
             ArrayList<String> fpsEntries = new ArrayList<>();
             ArrayList<String> fpsValues = new ArrayList<>();
-            for (float ratio : new float[]{1.0f/4.0f, 1.0f/3.0f, 1.0f/2.0f, 2.0f/3.0f, 1.0f}) {
+            for (float ratio : new float[]{1.0f/4.0f, 1.0f/3.0f, 1.0f/2.0f, 2.0f/3.0f, 3.0f/4.0f, 1.0f}) {
                 int fps = Math.round(maxSupportedFps * ratio);
                 fpsValues.add(String.valueOf(fps));
                 fpsEntries.add(fps + " FPS");

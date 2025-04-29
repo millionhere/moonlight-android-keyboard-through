@@ -343,11 +343,15 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
 
             ArrayList<String> resEntries = new ArrayList<>();
             ArrayList<String> resValues = new ArrayList<>();
-            {resValues.add(width+"x"+height); resEntries.add("Native "+resValues.get(resValues.size()-1));}
-            if (width*10/16 < height-1) {resValues.add(width+"x"+(int)Math.floor(width*10/16)); resEntries.add("Native 16:10 "+resValues.get(resValues.size()-1));}
-            if (width*9/16 < height-1) {resValues.add(width+"x"+(int)Math.floor(width*9/16)); resEntries.add("Native 16:9 "+resValues.get(resValues.size()-1));}
-            if (width*9/17 < height-1) {resValues.add(width+"x"+(int)Math.floor(width*9/17)); resEntries.add("Native 17:9 "+resValues.get(resValues.size()-1));}
-            if (width*9/21 < height-1) {resValues.add(width+"x"+(int)Math.floor(width*9/21)); resEntries.add("Native 21:9 "+resValues.get(resValues.size()-1));}
+            resValues.add(width + "x" + height);
+            resEntries.add(getString(R.string.resolution_prefix_native_fullscreen) + " (" + resValues.get(resValues.size()-1) + ")");
+            int[][] ratios = {{16,10}, {16,9}, {17,9}, {21,9}};
+            for (int[] ratio : ratios) {
+                if (width * ratio[1] / ratio[0] < height-1) {
+                    resValues.add(width + "x" + (int)Math.floor(width * ratio[1] / (float)ratio[0]));
+                    resEntries.add(ratio[0] + ":" + ratio[1] +" ("+resValues.get(resValues.size()-1)+")");
+                }
+            }
 
             final String[] resEntryStrings = resEntries.toArray(new String[0]);
             final String[] resValueStrings = resValues.toArray(new String[0]);
@@ -372,7 +376,7 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
             }
             ArrayList<String> fpsEntries = new ArrayList<>();
             ArrayList<String> fpsValues = new ArrayList<>();
-            for (float ratio : new float[]{1.0f/4.0f, 1.0f/3.0f, 1.0f/2.0f, 2.0f/3.0f, 1.0f}) {
+            for (float ratio : new float[]{1.0f/4.0f, 1.0f/3.0f, 1.0f/2.0f, 2.0f/3.0f, 3.0f/4.0f, 1.0f}) {
                 int fps = Math.round(maxSupportedFps * ratio);
                 fpsValues.add(String.valueOf(fps));
                 fpsEntries.add(fps + " FPS");
