@@ -185,11 +185,11 @@ public class PcView extends Activity implements AdapterFragmentCallbacks {
             ArrayList<String> resValues = new ArrayList<>();
             resValues.add(width + "x" + height);
             resEntries.add(getString(R.string.resolution_prefix_native_fullscreen) + " (" + resValues.get(resValues.size()-1) + ")");
-            int[][] ratios = {{10,16}, {9,16}, {9,17}, {9,21}};
+            int[][] ratios = {{16,10}, {16,9}, {17,9}, {21,9}};
             for (int[] ratio : ratios) {
-                if (width * ratio[0] / ratio[1] < height-1) {
-                    resValues.add(width + "x" + (int)Math.floor(width * ratio[0] / (float)ratio[1]));
-                    resEntries.add(ratio[1] + ":" + ratio[0] +" ("+resValues.get(resValues.size()-1)+")");
+                if (width * ratio[1] / ratio[0] < height-1) {
+                    resValues.add(width + "x" + (int)Math.floor(width * ratio[1] / (float)ratio[0]));
+                    resEntries.add(ratio[0] + ":" + ratio[1] +" ("+resValues.get(resValues.size()-1)+")");
                 }
             }
 
