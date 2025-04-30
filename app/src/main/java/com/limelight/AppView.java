@@ -348,7 +348,7 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
             int[][] ratios = {{16,10}, {16,9}, {17,9}, {21,9}};
             for (int[] ratio : ratios) {
                 if (width * ratio[1] / ratio[0] < height-1) {
-                    resValues.add(width + "x" + (int)Math.floor(width * ratio[1] / (float)ratio[0]));
+                    resValues.add(width + "x" + (int)(width * ratio[1] / (float)ratio[0]));
                     resEntries.add(ratio[0] + ":" + ratio[1] +" ("+resValues.get(resValues.size()-1)+")");
                 }
             }
@@ -376,7 +376,7 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
             }
             ArrayList<String> fpsEntries = new ArrayList<>();
             ArrayList<String> fpsValues = new ArrayList<>();
-            for (float ratio : new float[]{1.0f/4.0f, 1.0f/3.0f, 1.0f/2.0f, 2.0f/3.0f, 1.0f}) {
+            for (float ratio : new float[]{1.0f/4.0f, 1.0f/3.0f, 1.0f/2.0f, 2.0f/3.0f, 3.0f/4.0f, 1.0f}) {
                 int fps = Math.round(maxSupportedFps * ratio);
                 fpsValues.add(String.valueOf(fps));
                 fpsEntries.add(fps + " FPS");
@@ -445,7 +445,7 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
             
             builder.setTitle(getString(R.string.title_resolution_list) + " & " + getString(R.string.title_seekbar_bitrate))
                 .setView(customView)
-                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                .setPositiveButton(android.R.string.ok, dialog -> {
                     prefs.edit()
                         .putString(PreferenceConfiguration.RESOLUTION_PREF_STRING, 
                                 resValueStrings[resGroup.getCheckedRadioButtonId()])
