@@ -36,6 +36,10 @@
         android:textColor="#EE88BB"
         android:fontFamily="@font/players"
         android:preferKeepClear="true"
+        android:translationZ="-1dp"
+        android:focusable="false"
+        android:clickable="false"
+        android:focusableInTouchMode="false"
         android:visibility="gone" />
 
     <TextView
