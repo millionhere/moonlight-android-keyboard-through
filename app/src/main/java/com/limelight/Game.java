@@ -282,7 +282,6 @@ public class Game extends Activity implements SurfaceHolder.Callback,
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             performanceOverlayView.setTranslationZ(-1f);
             performanceOverlayView.setElevation(-1f);
-            performanceOverlayView.setAutofillEnabled(false);
         }
         performanceOverlayView.setFocusable(false);
         performanceOverlayView.setClickable(false);
