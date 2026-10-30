@@ -38,7 +38,7 @@ jobs:
 
     - name: Build with Gradle
       run: | 
-        ./gradlew assembleNonRootRelease
+        ./gradlew assembleNonRootRelease --no-daemon
 
     - name: Sign APK
       run: |
