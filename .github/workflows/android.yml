@@ -7,32 +7,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
 
     - name: Set up JDK 17
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v5
       with:
         java-version: '17'
         distribution: 'temurin'
         cache: gradle
 
     - name: Install Android SDK components
-      run: yes | sdkmanager "platforms;android-34" "build-tools;34.0.0" "ndk;29.0.14206865"
+      run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-34" "build-tools;34.0.0" "ndk;29.0.14206865"
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Update submodules
-      run: git submodule update --init --recursive
-
     - name: Build with Gradle
-      run: | 
-        ./gradlew assembleNonRootRelease --no-daemon
+      run: ./gradlew assembleNonRootRelease --no-daemon
 
     - name: Sign APK
       run: |
         DATE_TIME=$(date +%y%m%d_%H%M%S)
-        /home/runner/android/build-tools/34.0.0/apksigner sign --ks my-release-key.keystore --ks-key-alias temp_key --ks-pass pass:password --key-pass pass:password --out moonlight-android-millionhere_$DATE_TIME.apk app/build/outputs/apk/nonRoot/release/app-nonRoot-release-unsigned.apk
+        "$ANDROID_HOME/build-tools/34.0.0/apksigner" sign --ks my-release-key.keystore --ks-key-alias temp_key --ks-pass pass:password --key-pass pass:password --out moonlight-android-millionhere_$DATE_TIME.apk app/build/outputs/apk/nonRoot/release/app-nonRoot-release-unsigned.apk
 
     - name: Upload APK
       uses: actions/upload-artifact@v4.3.1
