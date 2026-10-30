@@ -16,25 +16,14 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Install Android SDK and NDK
-      run: |
-        mkdir /home/runner/android && cd /home/runner/android
-        
-        sudo apt install -y unzip
-        wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
-        unzip commandlinetools-linux-11076708_latest.zip
-        export PATH=$PATH:/home/runner/android/cmdline-tools/bin/
-        
-        yes | sdkmanager --sdk_root=/home/runner/android "platforms;android-34" "build-tools;34.0.0" "ndk;29.0.14206865"
+    - name: Install Android SDK components
+      run: yes | sdkmanager "platforms;android-34" "build-tools;34.0.0" "ndk;29.0.14206865"
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
     - name: Update submodules
       run: git submodule update --init --recursive
-
-    - name: Create local.properties
-      run: echo "ndk.dir=/home/runner/android/ndk/29.0.14206865" > local.properties
 
     - name: Build with Gradle
       run: | 
