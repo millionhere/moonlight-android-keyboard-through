@@ -445,7 +445,7 @@ public class AppView extends Activity implements AdapterFragmentCallbacks {
             
             builder.setTitle(getString(R.string.title_resolution_list) + " & " + getString(R.string.title_seekbar_bitrate))
                 .setView(customView)
-                .setPositiveButton(android.R.string.ok, dialog -> {
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
                     prefs.edit()
                         .putString(PreferenceConfiguration.RESOLUTION_PREF_STRING, 
                                 resValueStrings[resGroup.getCheckedRadioButtonId()])
